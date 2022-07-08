@@ -46,19 +46,15 @@ const updateAComment = async (blogId,commentId,comment)=>{
 }
 
 const deleteAComment = async (blogId,commentId) =>{
-    const blog = await getBlogById(blogId);
+   const blog = await getBlogById(blogId);
     if(!blog){
        return null;
     }
-    const nBlog = [];
-    for(let i=0;i<<blog.comments.length;i++){
-        if(blog.comments[i]._id.toString()===commentId){
-            continue;
-        }
-        nBlog.push(blog.comments[i]);
-    }
-    blog.comments=nBlog;
-    return await blog.save()
+    console.log(commentId)
+    blog.comments=blog.comments.filter((comment)=>comment._id.toString()!==commentId)
+    const res=await blog.save()
+    console.log(res);
+    return res;
 }
 
 const like = async (id,user)=>{
